@@ -1,0 +1,63 @@
+<definitions name="AccountService"
+             targetNamespace="http://www.example.org/AccountService/"
+             xmlns:tns="http://www.example.org/AccountService/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <types>
+    <xsd:schema targetNamespace="http://www.example.org/AccountService/">
+      <xsd:element name="getBalanceRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="accountId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getBalanceResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="balance" type="xsd:float"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <!-- Autres éléments pour getTransactions et transferFunds -->
+    </xsd:schema>
+  </types>
+
+  <message name="getBalanceRequest">
+    <part name="parameters" element="tns:getBalanceRequest"/>
+  </message>
+  <message name="getBalanceResponse">
+    <part name="parameters" element="tns:getBalanceResponse"/>
+  </message>
+  <!-- Autres messages pour getTransactions et transferFunds -->
+
+  <portType name="AccountServicePortType">
+    <operation name="getBalance">
+      <input message="tns:getBalanceRequest"/>
+      <output message="tns:getBalanceResponse"/>
+    </operation>
+    <!-- Autres opérations pour getTransactions et transferFunds -->
+  </portType>
+
+  <binding name="AccountServiceBinding" type="tns:AccountServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getBalance">
+      <soap:operation soapAction="getBalance"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <!-- Autres opérations pour getTransactions et transferFunds -->
+  </binding>
+
+  <service name="AccountService">
+    <port name="AccountServiceSoapPort" binding="tns:AccountServiceBinding">
+      <soap:address location="http://localhost:8000/wsdl"/>
+    </port>
+  </service>
+</definitions>
